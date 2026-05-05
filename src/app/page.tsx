@@ -4,6 +4,7 @@ import ActivityDataOverview from "@/components/ActivityData/ActivityDataOverview
 import PageContainer from "@/components/common/PageContainer";
 import DashboardOverview from "@/components/dashboard/DashboardOverview";
 import Header from "@/components/layout/Header";
+import MethodologyOverview from "@/components/methodology/MethodologyOverview";
 import { DashboardTab } from "@/constants/navigation";
 import { INITIAL_ACTIVITY_RECORDS } from "@/data/activityRecords";
 import { filterActivityRecords } from "@/lib/FilterRecords";
@@ -50,12 +51,7 @@ export default function Home() {
         )}
 
         {activeTab === "methodology" && (
-          <section>
-            <h2 className="text-xl font-semibold">계산 기준</h2>
-            <p className="mt-2 text-sm text-slate-500">
-              PCF 계산 방식, 배출계수, 버전 관리 구조를 설명하는 영역입니다.
-            </p>
-          </section>
+          <MethodologyOverview />
         )}
       </PageContainer>
     </>
