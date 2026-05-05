@@ -1,5 +1,6 @@
 "use client"
 
+import ActivityDataOverview from "@/components/ActivityData/ActivityDataOverview";
 import PageContainer from "@/components/common/PageContainer";
 import DashboardOverview from "@/components/dashboard/DashboardOverview";
 import Header from "@/components/layout/Header";
@@ -35,7 +36,6 @@ export default function Home() {
 
       <PageContainer>
         {activeTab == "dashboard" && (
-          <section>
             <DashboardOverview
               filters={filters}
               descriptions={descriptions}
@@ -43,25 +43,10 @@ export default function Home() {
               onFiltersChange={setFilters}
               onReset={() => setFilters(DEFAULT_FILTERS)}
             />
-          </section>
         )}
 
         {activeTab === "activity-data" && (
-          <section>
-            <h2 className="text-xl font-semibold">활동 데이터</h2>
-            <p className="mt-2 text-sm text-slate-500">
-              원본 활동 데이터와 계산된 배출량을 테이블로 확인하는 영역입니다.
-            </p>
-          </section>
-        )}
-
-        {activeTab === "data-input" && (
-          <section>
-            <h2 className="text-xl font-semibold">데이터 입력</h2>
-            <p className="mt-2 text-sm text-slate-500">
-              새로운 활동 데이터를 입력하고 오류 메시지를 확인하는 영역입니다.
-            </p>
-          </section>
+          <ActivityDataOverview filteredCount={filteredRecords.length} />
         )}
 
         {activeTab === "methodology" && (
