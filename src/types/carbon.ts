@@ -50,7 +50,7 @@ export interface EmissionByDescription {
 export interface FilterState {
   dateRange: { start: string; end: string } | null
   activityType: ActivityType | 'all'
-  item: string | 'all'
+  description: string | 'all'
 }
 
 export const ACTIVITY_TYPE_UNITS: Record<ActivityType, ActivityUnit> = {

@@ -1,12 +1,34 @@
 "use client"
 
 import PageContainer from "@/components/common/PageContainer";
+import DashboardOverview from "@/components/dashboard/DashboardOverview";
 import Header from "@/components/layout/Header";
 import { DashboardTab } from "@/constants/navigation";
-import { useState } from "react";
+import { INITIAL_ACTIVITY_RECORDS } from "@/data/activityRecords";
+import { filterActivityRecords } from "@/lib/FilterRecords";
+import { FilterState } from "@/types/carbon";
+import { useMemo, useState } from "react";
+
+const DEFAULT_FILTERS: FilterState = {
+  dateRange: null,
+  activityType: 'all',
+  description: 'all',
+}
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<DashboardTab>("dashboard")
+  const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS)
+
+  const descriptions = useMemo(() => {
+    return Array.from(
+      new Set(INITIAL_ACTIVITY_RECORDS.map((record) => record.description)),
+    )
+  }, [])
+
+  const filteredRecords = useMemo(() => {
+    return filterActivityRecords(INITIAL_ACTIVITY_RECORDS, filters)
+  }, [filters])
+
   return (
     <>
       <Header activeTab={activeTab} onTabChange={setActiveTab} />
@@ -14,14 +36,17 @@ export default function Home() {
       <PageContainer>
         {activeTab == "dashboard" && (
           <section>
-            <h2 className="text-xl font-semibold">대시보드</h2>
-            <p className="mt-2 text-sm text-slate-500">
-              총 배출량, 월별 추이, 활동 유형별 비중, 항목별 순위를 표시할 영역입니다.
-            </p>
+            <DashboardOverview
+              filters={filters}
+              descriptions={descriptions}
+              filteredRecords={filteredRecords}
+              onFiltersChange={setFilters}
+              onReset={() => setFilters(DEFAULT_FILTERS)}
+            />
           </section>
         )}
 
-         {activeTab === "activity-data" && (
+        {activeTab === "activity-data" && (
           <section>
             <h2 className="text-xl font-semibold">활동 데이터</h2>
             <p className="mt-2 text-sm text-slate-500">
