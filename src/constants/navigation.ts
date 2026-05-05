@@ -1,11 +1,10 @@
 import {
   Database,
-  CirclePlus,
   BookOpen,
   LayoutDashboard,
 } from "lucide-react"
 
-export type DashboardTab = "dashboard" | "activity-data" | "data-input" | "methodology"
+export type DashboardTab = "dashboard" | "activity-data" | "methodology"
 
 export const DASHBOARD_TABS = [
   {
@@ -15,13 +14,8 @@ export const DASHBOARD_TABS = [
   },
   {
     id: "activity-data",
-    label: "활동 데이터",
+    label: "데이터 관리",
     icon: Database,
-  },
-  {
-    id: "data-input",
-    label: "데이터 입력",
-    icon: CirclePlus,
   },
   {
     id: "methodology",
