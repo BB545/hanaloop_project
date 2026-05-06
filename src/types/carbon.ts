@@ -39,6 +39,7 @@ export interface EmissionByActivityType {
   activityType: ActivityType
   emissions: number
   fill: string
+  percentage: number
 }
 
 export interface EmissionByDescription {

@@ -1,7 +1,25 @@
+import { EmissionByActivityType, EmissionByDescription, MonthlyEmission } from "@/types/carbon"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
+import { DataQualitySummary } from "@/lib/caculate"
+import MonthlyEmissionChart from "./charts/MonthlyEmissionChart"
+import ActivityTypePieChart from "./charts/ActivityTypePieChart"
+import DescriptionRankingChart from "./charts/DescriptionRankingChart"
+import { formatNumber } from "@/lib/format"
+
+type DashboardChartProps = {
+  monthlyEmissions: MonthlyEmission[]
+  emissionsByActivityType: EmissionByActivityType[]
+  emissionsByDescription: EmissionByDescription[]
+  dataQuality: DataQualitySummary
+}
 
 
-const DashboardChart = () => {
+const DashboardChart = ({
+  monthlyEmissions,
+  emissionsByActivityType,
+  emissionsByDescription,
+  dataQuality,
+}: DashboardChartProps) => {
   return (
     <div className="grid gap-4 xl:grid-cols-[2fr_1fr] mt-5">
       <Card className="min-h-[360px]">
@@ -12,10 +30,8 @@ const DashboardChart = () => {
           </p>
         </CardHeader>
 
-        <CardContent>
-          <div className="flex h-64 items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50 text-sm text-slate-400">
-            월별 배출량 차트 영역
-          </div>
+        <CardContent className="flex flex-1 items-end">
+          <MonthlyEmissionChart data={monthlyEmissions} />
         </CardContent>
       </Card>
 
@@ -28,9 +44,7 @@ const DashboardChart = () => {
         </CardHeader>
 
         <CardContent>
-          <div className="flex h-64 items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50 text-sm text-slate-400">
-            활동 유형별 비중 차트 영역
-          </div>
+          <ActivityTypePieChart data={emissionsByActivityType} />
         </CardContent>
       </Card>
 
@@ -42,10 +56,8 @@ const DashboardChart = () => {
           </p>
         </CardHeader>
 
-        <CardContent>
-          <div className="flex h-56 items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50 text-sm text-slate-400">
-            항목별 배출량 순위 영역
-          </div>
+        <CardContent className="flex flex-1 items-end">
+          <DescriptionRankingChart data={emissionsByDescription} />
         </CardContent>
       </Card>
 
@@ -61,22 +73,30 @@ const DashboardChart = () => {
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-xl bg-slate-50 p-4">
               <p className="text-sm text-slate-500">총 데이터</p>
-              <p className="mt-2 text-xl font-semibold text-slate-950">- 건</p>
+              <p className="mt-2 text-xl font-semibold text-slate-950">
+                {dataQuality.totalCount}건
+              </p>
             </div>
 
             <div className="rounded-xl bg-slate-50 p-4">
               <p className="text-sm text-slate-500">검증 완료</p>
-              <p className="mt-2 text-xl font-semibold text-slate-950">- 건</p>
+              <p className="mt-2 text-xl font-semibold text-slate-950">
+                {dataQuality.validCount}건
+              </p>
             </div>
 
             <div className="rounded-xl bg-slate-50 p-4">
               <p className="text-sm text-slate-500">오류 데이터</p>
-              <p className="mt-2 text-xl font-semibold text-slate-950">- 건</p>
+              <p className="mt-2 text-xl font-semibold text-slate-950">
+                {dataQuality.errorCount}건
+              </p>
             </div>
 
             <div className="rounded-xl bg-slate-50 p-4">
               <p className="text-sm text-slate-500">배출계수 매칭률</p>
-              <p className="mt-2 text-xl font-semibold text-slate-950">- %</p>
+              <p className="mt-2 text-xl font-semibold text-slate-950">
+                {formatNumber(dataQuality.matchingRate)}%
+              </p>
             </div>
           </div>
         </CardContent>

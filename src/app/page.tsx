@@ -7,6 +7,8 @@ import Header from "@/components/layout/Header";
 import MethodologyOverview from "@/components/methodology/MethodologyOverview";
 import { DashboardTab } from "@/constants/navigation";
 import { INITIAL_ACTIVITY_RECORDS } from "@/data/activityRecords";
+import { EMISSION_FACTORS } from "@/data/emissionFactors";
+import { calculateActivityRecords, calculateDashboardSummary, calculateDataQuality, getEmissionsByActivityType, getEmissionsByDescription, getMonthlyEmissions } from "@/lib/caculate";
 import { filterActivityRecords } from "@/lib/FilterRecords";
 import { FilterState } from "@/types/carbon";
 import { useMemo, useState } from "react";
@@ -31,19 +33,48 @@ export default function Home() {
     return filterActivityRecords(INITIAL_ACTIVITY_RECORDS, filters)
   }, [filters])
 
+  const calculatedRecords = useMemo(() => {
+    return calculateActivityRecords(filteredRecords, EMISSION_FACTORS)
+  }, [filteredRecords])
+
+  const dashboardSummary = useMemo(() => {
+    return calculateDashboardSummary(calculatedRecords)
+  }, [calculatedRecords])
+
+  const monthlyEmissions = useMemo(() => {
+    return getMonthlyEmissions(calculatedRecords)
+  }, [calculatedRecords])
+
+  const emissionsByActivityType = useMemo(() => {
+    return getEmissionsByActivityType(calculatedRecords)
+  }, [calculatedRecords])
+
+  const emissionsByDescription = useMemo(() => {
+    return getEmissionsByDescription(calculatedRecords)
+  }, [calculatedRecords])
+
+  const dataQuality = useMemo(() => {
+    return calculateDataQuality(filteredRecords, calculatedRecords)
+  }, [filteredRecords, calculatedRecords])
+
   return (
     <>
       <Header activeTab={activeTab} onTabChange={setActiveTab} />
 
       <PageContainer>
         {activeTab == "dashboard" && (
-            <DashboardOverview
-              filters={filters}
-              descriptions={descriptions}
-              filteredRecords={filteredRecords}
-              onFiltersChange={setFilters}
-              onReset={() => setFilters(DEFAULT_FILTERS)}
-            />
+          <DashboardOverview
+            filters={filters}
+            descriptions={descriptions}
+            filteredRecords={filteredRecords}
+            onFiltersChange={setFilters}
+            onReset={() => setFilters(DEFAULT_FILTERS)}
+            summary={dashboardSummary}
+            monthlyEmissions={monthlyEmissions}
+            emissionsByActivityType={emissionsByActivityType}
+            emissionsByDescription={emissionsByDescription}
+            dataQuality={dataQuality}
+          />
         )}
 
         {activeTab === "activity-data" && (
