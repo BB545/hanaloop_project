@@ -18,7 +18,7 @@ const MonthlyEmissionChart = ({ data }: MonthlyEmissionChartProps) => {
     }
 
     return (
-        <div className="h-80 w-full">
+        <div className="h-80 min-w-0 w-full">
             <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} />

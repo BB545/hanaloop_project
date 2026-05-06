@@ -18,7 +18,7 @@ const DescriptionRankingChart = ({ data }: DescriptionRankingChartProps) => {
     }
 
     return (
-        <div className="h-56 w-full">
+        <div className="h-56 min-w-0 w-full">
             <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                     data={data}

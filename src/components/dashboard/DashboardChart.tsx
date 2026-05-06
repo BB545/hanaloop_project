@@ -21,8 +21,8 @@ const DashboardChart = ({
   dataQuality,
 }: DashboardChartProps) => {
   return (
-    <div className="grid gap-4 xl:grid-cols-[2fr_1fr] mt-5">
-      <Card className="min-h-[360px]">
+    <div className="grid min-w-0 gap-4 xl:grid-cols-[2fr_1fr] mt-5">
+      <Card className="min-h-[360px] min-w-0">
         <CardHeader>
           <CardTitle className="text-base">월별 배출량 추이</CardTitle>
           <p className="text-sm text-slate-500">
@@ -30,12 +30,12 @@ const DashboardChart = ({
           </p>
         </CardHeader>
 
-        <CardContent className="flex flex-1 items-end">
+        <CardContent className="flex min-h-0 min-w-0 flex-1 items-end">
           <MonthlyEmissionChart data={monthlyEmissions} />
         </CardContent>
       </Card>
 
-      <Card className="min-h-[360px]">
+      <Card className="min-h-[360px] min-w-0">
         <CardHeader>
           <CardTitle className="text-base">활동 유형별 배출 비중</CardTitle>
           <p className="text-sm text-slate-500">
@@ -43,12 +43,12 @@ const DashboardChart = ({
           </p>
         </CardHeader>
 
-        <CardContent>
+        <CardContent className="min-w-0 min-h-0">
           <ActivityTypePieChart data={emissionsByActivityType} />
         </CardContent>
       </Card>
 
-      <Card className="min-h-[320px]">
+      <Card className="min-h-[320px] min-w-0">
         <CardHeader>
           <CardTitle className="text-base">항목별 배출량 순위</CardTitle>
           <p className="text-sm text-slate-500">
@@ -56,12 +56,12 @@ const DashboardChart = ({
           </p>
         </CardHeader>
 
-        <CardContent className="flex flex-1 items-end">
+        <CardContent className="flex min-w-0 min-h-0 flex-1 items-end">
           <DescriptionRankingChart data={emissionsByDescription} />
         </CardContent>
       </Card>
 
-      <Card className="min-h-[320px]">
+      <Card className="min-h-[320px] min-w-0">
         <CardHeader>
           <CardTitle className="text-base">데이터 품질 요약</CardTitle>
           <p className="text-sm text-slate-500">
