@@ -308,7 +308,7 @@ docker compose up -d
 배출량(kgCO2e) = activity_records.amount × emission_factors.factor
 ```
 
-<img src="./public/readme/erd.png" alt="erd" width="500" />
+<img src="./public/readme/erd.png" alt="erd" width="300" />
 
 ---
 
