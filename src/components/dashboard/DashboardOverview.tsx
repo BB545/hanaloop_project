@@ -40,7 +40,7 @@ const DashboardOverview = ({
                 onReset={onReset}
             />
 
-            <div className="rounded-xl border bg-white p-6 mt-1">
+            <div className="rounded-xl border border-slate-200 bg-white p-6 mt-1">
                 <p className="text-sm text-slate-500">
                     현재 조건 결과: <span className="font-semibold">{filteredRecords.length}건</span> (조건 미적용 시 최근 12개월 기준)
                 </p>
