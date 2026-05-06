@@ -100,7 +100,7 @@
 - 항목별 배출량 Top 5
 - 데이터 품질 요약
 
-<img src="./public/readme/upload1.gif" alt="대시보드 초기 화면" width="800" />
+<img src="./public/readme/upload1.gif" alt="대시보드 초기 화면" width="500" />
 
 ---
 
@@ -117,7 +117,7 @@
 - 데이터 품질 요약
 - 활동 데이터 테이블
 
-<img src="./public/readme/filter.png" alt="필터 적용 화면" width="800" />
+<img src="./public/readme/filter.png" alt="필터 적용 화면" width="500" />
 
 ---
 
@@ -137,7 +137,7 @@
 
 입력된 데이터는 PostgreSQL에 저장되며, 저장 후 화면 데이터가 갱신됩니다.
 
-<img src="./public/readme/data1.png" alt="활동 데이터 입력 화면" width="800" />
+<img src="./public/readme/data1.png" alt="활동 데이터 입력 화면" width="500" />
 
 ---
 
@@ -157,7 +157,7 @@
 → 대시보드 및 테이블 갱신
 ```
 
-<img src="./public/readme/upload2.gif" alt="엑셀 데이터 업로드 화면" width="800" />
+<img src="./public/readme/upload2.gif" alt="엑셀 데이터 업로드 화면" width="500" />
 
 ---
 
@@ -177,7 +177,7 @@
 | 배출계수 | 활동 항목에 적용된 계수 |
 | 배출량 | 사용량 × 배출계수 |
 
-<img src="./public/readme/data2.png" alt="활동 데이터 테이블 화면" width="800" />
+<img src="./public/readme/data2.png" alt="활동 데이터 테이블 화면" width="500" />
 
 ---
 
