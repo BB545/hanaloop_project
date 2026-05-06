@@ -42,7 +42,7 @@ const DashboardOverview = ({
 
             <div className="rounded-xl border bg-white p-6 mt-1">
                 <p className="text-sm text-slate-500">
-                    현재 조건 결과: {filteredRecords.length}건
+                    현재 조건 결과: <span className="font-semibold">{filteredRecords.length}건</span> (조건 미적용 시 최근 12개월 기준)
                 </p>
                 <p className="mt-2 text-sm text-indigo-700">
                     상세 데이터는 {" "}

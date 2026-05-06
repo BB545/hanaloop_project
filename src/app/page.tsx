@@ -8,7 +8,7 @@ import MethodologyOverview from "@/components/methodology/MethodologyOverview";
 import { DashboardTab } from "@/constants/navigation";
 import { INITIAL_ACTIVITY_RECORDS } from "@/data/activityRecords";
 import { EMISSION_FACTORS } from "@/data/emissionFactors";
-import { calculateActivityRecords, calculateDashboardSummary, calculateDataQuality, getEmissionsByActivityType, getEmissionsByDescription, getMonthlyEmissions } from "@/lib/caculate";
+import { calculateActivityRecords, calculateDashboardSummary, calculateDataQuality, getEmissionsByActivityType, getEmissionsByDescription, getMonthlyEmissions, getRecentCalculatedRecords } from "@/lib/caculate";
 import { filterActivityRecords } from "@/lib/FilterRecords";
 import { ActivityRecord, FilterState } from "@/types/carbon";
 import { useEffect, useMemo, useState } from "react";
@@ -48,6 +48,15 @@ export default function Home() {
     window.localStorage.setItem("activeTab", tab)
   }
 
+  const hasActiveFilters = useMemo(() => {
+    return (
+      !!filters.dateRange?.start ||
+      !!filters.dateRange?.end ||
+      filters.activityType !== "all" ||
+      filters.description !== "all"
+    )
+  }, [filters])
+
   const descriptions = useMemo(() => {
     return Array.from(
       new Set(activityRecords.map((record) => record.description)),
@@ -62,25 +71,43 @@ export default function Home() {
     return calculateActivityRecords(filteredRecords, EMISSION_FACTORS)
   }, [filteredRecords])
 
+  const dashboardBaseRecords = useMemo(() => {
+    return hasActiveFilters
+      ? calculatedRecords
+      : getRecentCalculatedRecords(calculatedRecords, 12)
+  }, [hasActiveFilters, calculatedRecords])
+
+  const dashboardBaseRawRecords = useMemo(() => {
+    if (hasActiveFilters) {
+      return filteredRecords
+    }
+
+    const dashboardBaseIds = new Set(
+      dashboardBaseRecords.map((record) => record.id)
+    )
+
+    return filteredRecords.filter((record) => dashboardBaseIds.has(record.id))
+  }, [hasActiveFilters, filteredRecords, dashboardBaseRecords])
+
   const dashboardSummary = useMemo(() => {
-    return calculateDashboardSummary(calculatedRecords)
-  }, [calculatedRecords])
+    return calculateDashboardSummary(dashboardBaseRecords)
+  }, [dashboardBaseRecords])
 
   const monthlyEmissions = useMemo(() => {
-    return getMonthlyEmissions(calculatedRecords)
-  }, [calculatedRecords])
+    return getMonthlyEmissions(dashboardBaseRecords)
+  }, [dashboardBaseRecords])
 
   const emissionsByActivityType = useMemo(() => {
-    return getEmissionsByActivityType(calculatedRecords)
-  }, [calculatedRecords])
+    return getEmissionsByActivityType(dashboardBaseRecords)
+  }, [dashboardBaseRecords])
 
   const emissionsByDescription = useMemo(() => {
-    return getEmissionsByDescription(calculatedRecords)
-  }, [calculatedRecords])
+    return getEmissionsByDescription(dashboardBaseRecords).slice(0, 5)
+  }, [dashboardBaseRecords])
 
   const dataQuality = useMemo(() => {
-    return calculateDataQuality(filteredRecords, calculatedRecords)
-  }, [filteredRecords, calculatedRecords])
+    return calculateDataQuality(dashboardBaseRawRecords, dashboardBaseRecords)
+  }, [dashboardBaseRawRecords, dashboardBaseRecords])
 
   const handleAddActivityRecord = (record: ActivityRecord) => {
     setActivityRecords((prevRecords) => [record, ...prevRecords])
@@ -114,7 +141,7 @@ export default function Home() {
 
         {activeTab === "activity-data" && (
           <ActivityDataOverview
-            records={calculatedRecords}
+            records={dashboardBaseRecords}
             onAddRecord={handleAddActivityRecord}
           />
         )}

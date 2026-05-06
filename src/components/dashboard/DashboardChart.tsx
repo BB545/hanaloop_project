@@ -50,9 +50,9 @@ const DashboardChart = ({
 
       <Card className="min-h-[320px] min-w-0">
         <CardHeader>
-          <CardTitle className="text-base">항목별 배출량 순위</CardTitle>
+          <CardTitle className="text-base">항목별 배출량 Top 5</CardTitle>
           <p className="text-sm text-slate-500">
-            세부 항목별 누적 배출량을 비교합니다.
+            배출량이 높은 상위 5개 항목을 비교합니다.
           </p>
         </CardHeader>
 
