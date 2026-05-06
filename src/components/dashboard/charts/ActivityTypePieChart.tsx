@@ -34,7 +34,22 @@ const ActivityTypePieChart = ({ data }: ActivityTypePieChartProps) => {
             <div className="h-48 min-w-0 w-full">
                 <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
-                        <Tooltip formatter={(value) => formatEmission(Number(value))} />
+                        <Tooltip
+                            formatter={(value) => formatEmission(Number(value))}
+                            contentStyle={{
+                                color: "#334155",
+                                borderColor: "#e2e8f0",
+                                borderRadius: "12px",
+                                fontSize: "12px",
+                            }}
+                            itemStyle={{
+                                color: "#334155",
+                            }}
+                            labelStyle={{
+                                color: "#334155",
+                                fontWeight: 600,
+                            }}
+                        />
                         <Pie
                             data={chartData}
                             dataKey="emissions"
