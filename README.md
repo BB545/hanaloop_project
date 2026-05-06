@@ -308,32 +308,7 @@ docker compose up -d
 배출량(kgCO2e) = activity_records.amount × emission_factors.factor
 ```
 
-```mermaid
-erDiagram
-    ACTIVITY_RECORDS {
-        text id PK "활동 데이터 ID"
-        date date "활동 일자"
-        text activity_type "활동 유형"
-        text description "활동 항목 설명"
-        numeric amount "사용량"
-        text unit "사용 단위"
-        text source "데이터 출처"
-        timestamp created_at "생성 시각"
-    }
-
-    EMISSION_FACTORS {
-        serial id PK "배출계수 ID"
-        text activity_type "활동 유형"
-        text description "배출계수 항목 설명"
-        text activity_unit "활동 단위"
-        numeric factor "배출계수"
-        text factor_unit "배출계수 단위"
-        text version "배출계수 버전"
-        timestamp created_at "생성 시각"
-    }
-
-    ACTIVITY_RECORDS }o--|| EMISSION_FACTORS : "activity_type + description + unit 기준 매칭"
-```
+<img src="./public/readme/erd.png.png" alt="erd" width="500" />
 
 ---
 
