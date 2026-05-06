@@ -1,7 +1,21 @@
+import { EmissionByActivityType, EmissionByDescription, MonthlyEmission } from "@/types/carbon"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
+import { DataQualitySummary } from "@/lib/caculate"
+
+type DashboardChartProps = {
+  monthlyEmissions: MonthlyEmission[]
+  emissionsByActivityType: EmissionByActivityType[]
+  emissionsByDescription: EmissionByDescription[]
+  dataQuality: DataQualitySummary
+}
 
 
-const DashboardChart = () => {
+const DashboardChart = ({
+  monthlyEmissions,
+  emissionsByActivityType,
+  emissionsByDescription,
+  dataQuality,
+}: DashboardChartProps) => {
   return (
     <div className="grid gap-4 xl:grid-cols-[2fr_1fr] mt-5">
       <Card className="min-h-[360px]">
