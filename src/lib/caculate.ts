@@ -1,4 +1,4 @@
-import type { ActivityRecord, CalculatedActivityRecord, EmissionByActivityType, EmissionByDescription, EmissionFactor, MonthlyEmission } from "@/types/carbon"
+import { ACTIVITY_TYPE_LABELS, type ActivityRecord, type CalculatedActivityRecord, type EmissionByActivityType, type EmissionByDescription, type EmissionFactor, type MonthlyEmission } from "@/types/carbon"
 
 export type DashboardSummary = {
     totalEmissions: number
