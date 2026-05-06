@@ -7,6 +7,8 @@ import { Filter, RotateCcw } from "lucide-react"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
+import { useMemo } from "react"
+import { EMISSION_FACTORS } from "@/data/emissionFactors"
 
 type DashboardFilterProps = {
     filters: FilterState
@@ -14,6 +16,13 @@ type DashboardFilterProps = {
     onFiltersChange: (filters: FilterState) => void
     onReset: () => void
 }
+
+const ACTIVITY_TYPE_OPTIONS = Object.entries(ACTIVITY_TYPE_LABELS).map(
+    ([value, label]) => ({
+        value: value as ActivityType,
+        label,
+    })
+)
 
 const DashboardFilter = ({
     filters,
@@ -55,6 +64,26 @@ const DashboardFilter = ({
             description: value,
         })
     }
+
+    const filteredDescriptionOptions = useMemo(() => {
+        if (filters.activityType === "all") return []
+
+        return descriptions.filter((description) =>
+            descriptions.includes(description)
+        )
+    }, [descriptions, filters.activityType])
+
+    const descriptionOptions = useMemo(() => {
+        if (filters.activityType === "all") return []
+
+        return Array.from(
+            new Set(
+                EMISSION_FACTORS
+                    .filter((factor) => factor.activityType === filters.activityType)
+                    .map((factor) => factor.description)
+            )
+        )
+    }, [filters.activityType])
 
     return (
         <Card>
@@ -113,15 +142,11 @@ const DashboardFilter = ({
                                 position="popper"
                             >
                                 <SelectItem value="all">전체 유형</SelectItem>
-                                <SelectItem value="electricity">
-                                    {ACTIVITY_TYPE_LABELS.electricity}
-                                </SelectItem>
-                                <SelectItem value="raw_material">
-                                    {ACTIVITY_TYPE_LABELS.raw_material}
-                                </SelectItem>
-                                <SelectItem value="transportation">
-                                    {ACTIVITY_TYPE_LABELS.transportation}
-                                </SelectItem>
+                                {ACTIVITY_TYPE_OPTIONS.map((option) => (
+                                    <SelectItem key={option.value} value={option.value}>
+                                        {option.label}
+                                    </SelectItem>
+                                ))}
                             </SelectContent>
                         </Select>
                     </div>
@@ -131,6 +156,7 @@ const DashboardFilter = ({
                         <Select
                             value={filters.description}
                             onValueChange={handleDescriptionChange}
+                            disabled={filters.activityType === "all"}
                         >
                             <SelectTrigger className="w-full">
                                 <SelectValue placeholder="항목 선택" />
@@ -139,7 +165,7 @@ const DashboardFilter = ({
                                 position="popper"
                             >
                                 <SelectItem value="all">전체 항목</SelectItem>
-                                {descriptions.map((description) => (
+                                {descriptionOptions.map((description) => (
                                     <SelectItem key={description} value={description}>
                                         {description}
                                     </SelectItem>
