@@ -82,6 +82,7 @@ export default function Home() {
             emissionsByActivityType={emissionsByActivityType}
             emissionsByDescription={emissionsByDescription}
             dataQuality={dataQuality}
+            onMoveToActivityData={() => setActiveTab("activity-data")}
           />
         )}
 

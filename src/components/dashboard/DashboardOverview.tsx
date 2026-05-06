@@ -15,6 +15,7 @@ type DashboardOverviewProps = {
     emissionsByActivityType: EmissionByActivityType[]
     emissionsByDescription: EmissionByDescription[]
     dataQuality: DataQualitySummary
+    onMoveToActivityData: () => void
 }
 
 const DashboardOverview = ({
@@ -28,6 +29,7 @@ const DashboardOverview = ({
     emissionsByActivityType,
     emissionsByDescription,
     dataQuality,
+    onMoveToActivityData,
 }: DashboardOverviewProps) => {
     return (
         <section>
@@ -41,6 +43,17 @@ const DashboardOverview = ({
             <div className="rounded-xl border bg-white p-6 mt-1">
                 <p className="text-sm text-slate-500">
                     현재 조건 결과: {filteredRecords.length}건
+                </p>
+                <p className="mt-2 text-sm text-indigo-700">
+                    상세 데이터는 {" "}
+                    <button
+                        type="button"
+                        onClick={onMoveToActivityData}
+                        className="cursor-pointer underline underline-offset-4 transition-colors hover:text-indigo-900"
+                    >
+                        [데이터 관리]
+                    </button>
+                    {" "} 탭에서 확인할 수 있습니다.
                 </p>
             </div>
 
