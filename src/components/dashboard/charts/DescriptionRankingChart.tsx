@@ -11,14 +11,14 @@ type DescriptionRankingChartProps = {
 const DescriptionRankingChart = ({ data }: DescriptionRankingChartProps) => {
     if (data.length === 0) {
         return (
-            <div className="flex h-56 items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50 text-sm text-slate-400">
+            <div className="flex h-56 w-full items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50 text-sm text-slate-400">
                 표시할 항목별 배출량 데이터가 없습니다.
             </div>
         )
     }
 
     return (
-        <div className="h-56 w-full">
+        <div className="h-56 min-w-0 w-full">
             <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                     data={data}

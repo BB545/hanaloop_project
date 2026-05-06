@@ -11,14 +11,14 @@ type MonthlyEmissionChartProps = {
 const MonthlyEmissionChart = ({ data }: MonthlyEmissionChartProps) => {
     if (data.length === 0) {
         return (
-            <div className="flex h-64 items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50 text-sm text-slate-400">
+            <div className="flex h-64 w-full items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50 text-sm text-slate-400">
                 표시할 월별 배출량 데이터가 없습니다.
             </div>
         )
     }
 
     return (
-        <div className="h-80 w-full">
+        <div className="h-80 min-w-0 w-full">
             <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} />

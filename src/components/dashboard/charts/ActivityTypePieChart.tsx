@@ -2,7 +2,7 @@
 
 import { formatEmission, formatNumber } from "@/lib/format"
 import { ACTIVITY_TYPE_LABELS, type ActivityType, type EmissionByActivityType } from "@/types/carbon"
-import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts"
+import { Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts"
 
 type ActivityTypePieChartProps = {
     data: EmissionByActivityType[]
@@ -17,7 +17,7 @@ const ACTIVITY_TYPE_COLORS: Record<ActivityType, string> = {
 const ActivityTypePieChart = ({ data }: ActivityTypePieChartProps) => {
     if (data.length === 0) {
         return (
-            <div className="flex h-64 items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50 text-sm text-slate-400">
+            <div className="flex h-64 w-full items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50 text-sm text-slate-400">
                 표시할 활동 유형별 데이터가 없습니다.
             </div>
         )
@@ -31,7 +31,7 @@ const ActivityTypePieChart = ({ data }: ActivityTypePieChartProps) => {
 
     return (
         <div className="space-y-4">
-            <div className="h-48 w-full">
+            <div className="h-48 min-w-0 w-full">
                 <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                         <Tooltip formatter={(value) => formatEmission(Number(value))} />

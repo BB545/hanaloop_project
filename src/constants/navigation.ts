@@ -19,7 +19,7 @@ export const DASHBOARD_TABS = [
   },
   {
     id: "methodology",
-    label: "계산 기준",
+    label: "도움말",
     icon: BookOpen,
   },
 ] as const

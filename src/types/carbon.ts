@@ -34,7 +34,6 @@ export interface MonthlyEmission {
   emissions: number
 }
 
-// 도넛차트
 export interface EmissionByActivityType {
   activityType: ActivityType
   emissions: number
@@ -66,7 +65,6 @@ export const ACTIVITY_TYPE_LABELS: Record<ActivityType, string> = {
   transportation: '운송',
 }
 
-// 차트 색상 구현
 export const ACTIVITY_TYPE_COLORS: Record<ActivityType, string> = {
   electricity: 'var(--chart-1)',
   raw_material: 'var(--chart-2)',

@@ -91,6 +91,33 @@ export function getMonthlyEmissions(
         .sort((a, b) => a.month.localeCompare(b.month))
 }
 
+export function getRecentCalculatedRecords(
+    records: CalculatedActivityRecord[],
+    monthLimit = 12
+): CalculatedActivityRecord[] {
+    const now = new Date()
+    const currentMonthStart = new Date(now.getFullYear(), now.getMonth(), 1)
+
+    const startMonth = new Date(
+        currentMonthStart.getFullYear(),
+        currentMonthStart.getMonth() - (monthLimit - 1),
+        1
+    )
+
+    const endMonth = new Date(
+        currentMonthStart.getFullYear(),
+        currentMonthStart.getMonth() + 1,
+        1
+    )
+
+    return records.filter((record) => {
+        const [year, month] = record.date.split("-").map(Number)
+        const recordMonth = new Date(year, month - 1, 1)
+
+        return recordMonth >= startMonth && recordMonth < endMonth
+    })
+}
+
 export function getEmissionsByActivityType(
     records: CalculatedActivityRecord[]
 ): EmissionByActivityType[] {
