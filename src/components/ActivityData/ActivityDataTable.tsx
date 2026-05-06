@@ -53,7 +53,7 @@ const ActivityDataTable = ({
                                 <TableHead className="min-w-[120px]">날짜</TableHead>
                                 <TableHead className="min-w-[120px]">활동 유형</TableHead>
                                 <TableHead className="min-w-[160px]">항목명</TableHead>
-                                <TableHead className="min-w-[100px] text-right">수량</TableHead>
+                                <TableHead className="min-w-[100px] text-right">사용량</TableHead>
                                 <TableHead className="min-w-[80px]">단위</TableHead>
                                 <TableHead className="min-w-[120px] text-right">
                                     배출계수

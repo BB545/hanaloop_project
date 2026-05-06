@@ -10,7 +10,7 @@ import { INITIAL_ACTIVITY_RECORDS } from "@/data/activityRecords";
 import { EMISSION_FACTORS } from "@/data/emissionFactors";
 import { calculateActivityRecords, calculateDashboardSummary, calculateDataQuality, getEmissionsByActivityType, getEmissionsByDescription, getMonthlyEmissions } from "@/lib/caculate";
 import { filterActivityRecords } from "@/lib/FilterRecords";
-import { FilterState } from "@/types/carbon";
+import { ActivityRecord, FilterState } from "@/types/carbon";
 import { useMemo, useState } from "react";
 
 const DEFAULT_FILTERS: FilterState = {
@@ -22,16 +22,19 @@ const DEFAULT_FILTERS: FilterState = {
 export default function Home() {
   const [activeTab, setActiveTab] = useState<DashboardTab>("dashboard")
   const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS)
+  const [activityRecords, setActivityRecords] = useState<ActivityRecord[]>(
+    INITIAL_ACTIVITY_RECORDS
+  )
 
   const descriptions = useMemo(() => {
     return Array.from(
-      new Set(INITIAL_ACTIVITY_RECORDS.map((record) => record.description)),
+      new Set(activityRecords.map((record) => record.description)),
     )
-  }, [])
+  }, [activityRecords])
 
   const filteredRecords = useMemo(() => {
-    return filterActivityRecords(INITIAL_ACTIVITY_RECORDS, filters)
-  }, [filters])
+    return filterActivityRecords(activityRecords, filters)
+  }, [activityRecords, filters])
 
   const calculatedRecords = useMemo(() => {
     return calculateActivityRecords(filteredRecords, EMISSION_FACTORS)
@@ -57,6 +60,11 @@ export default function Home() {
     return calculateDataQuality(filteredRecords, calculatedRecords)
   }, [filteredRecords, calculatedRecords])
 
+  const handleAddActivityRecord = (record: ActivityRecord) => {
+    setActivityRecords((prevRecords) => [record, ...prevRecords])
+    setFilters(DEFAULT_FILTERS)
+  }
+
   return (
     <>
       <Header activeTab={activeTab} onTabChange={setActiveTab} />
@@ -78,7 +86,10 @@ export default function Home() {
         )}
 
         {activeTab === "activity-data" && (
-          <ActivityDataOverview records={calculatedRecords} />
+          <ActivityDataOverview
+            records={calculatedRecords}
+            onAddRecord={handleAddActivityRecord}
+          />
         )}
 
         {activeTab === "methodology" && (
