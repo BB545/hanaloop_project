@@ -125,7 +125,7 @@ export default function Home() {
           <DashboardOverview
             filters={filters}
             descriptions={descriptions}
-            filteredRecords={filteredRecords}
+            filteredRecords={dashboardBaseRecords}
             onFiltersChange={setFilters}
             onReset={() => setFilters(DEFAULT_FILTERS)}
             summary={dashboardSummary}
