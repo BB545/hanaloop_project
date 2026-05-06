@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: hanaloop-postgres
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: hanaloop
+      POSTGRES_USER: hanaloop
+      POSTGRES_PASSWORD: hanaloop
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  postgres_data:

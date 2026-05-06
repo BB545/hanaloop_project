@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PCF Calculator",
+  title: "PCF Dashboard",
   description: "Automatic carbon footprint calculation by product",
 };
 

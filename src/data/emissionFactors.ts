@@ -1,0 +1,48 @@
+import type { EmissionFactor } from '@/types/carbon'
+
+export const EMISSION_FACTORS: EmissionFactor[] = [
+  {
+    id: 'factor-electricity-kepco-2025',
+    activityType: 'electricity',
+    description: '한국전력',
+    factor: 0.456,
+    activityUnit: 'kWh',
+    factorUnit: 'kgCO2e/kWh',
+    version: '2025.1',
+    effectiveFrom: '2025-01-01',
+    effectiveTo: null,
+  },
+  {
+    id: 'factor-raw-material-plastic-1-2025',
+    activityType: 'raw_material',
+    description: '플라스틱 1',
+    factor: 2.3,
+    activityUnit: 'kg',
+    factorUnit: 'kgCO2e/kg',
+    version: '2025.1',
+    effectiveFrom: '2025-01-01',
+    effectiveTo: null,
+  },
+  {
+    id: 'factor-raw-material-plastic-2-2025',
+    activityType: 'raw_material',
+    description: '플라스틱 2',
+    factor: 3.2,
+    activityUnit: 'kg',
+    factorUnit: 'kgCO2e/kg',
+    version: '2025.1',
+    effectiveFrom: '2025-01-01',
+    effectiveTo: null,
+  },
+  {
+    id: 'factor-transportation-truck-2025',
+    activityType: 'transportation',
+    description: '트럭',
+    factor: 3.5,
+    activityUnit: 'ton-km',
+    factorUnit: 'kgCO2e/ton-km',
+    version: '2025.1',
+    effectiveFrom: '2025-01-01',
+    effectiveTo: null,
+  },
+]
