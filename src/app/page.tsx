@@ -23,7 +23,7 @@ export default function Home() {
   const [isMounted, setIsMounted] = useState(false)
   const [activeTab, setActiveTab] = useState<DashboardTab>("dashboard")
   const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS)
-  const [activityRecords, setActivityRecords] = useState<ActivityRecord[]>([])
+  const [activityRecords, setActivityRecords] = useState<ActivityRecord[]>(INITIAL_ACTIVITY_RECORDS)
 
   const fetchActivityRecords = async () => {
     try {
@@ -34,11 +34,16 @@ export default function Home() {
 
       if (!response.ok) {
         console.error("활동 데이터 조회 실패:", data.message)
-        setActivityRecords([])
+        setActivityRecords(INITIAL_ACTIVITY_RECORDS)
         return
       }
 
-      setActivityRecords(Array.isArray(data.records) ? data.records : [])
+      const dbRecords = Array.isArray(data.records) ? data.records : []
+
+      setActivityRecords([
+        ...INITIAL_ACTIVITY_RECORDS,
+        ...dbRecords,
+      ])
     } catch (error) {
       console.error("활동 데이터 조회 실패", error)
       setActivityRecords([])
@@ -140,14 +145,22 @@ export default function Home() {
         body: JSON.stringify(record),
       })
 
+      const data = await response.json()
+
       if (!response.ok) {
-        throw new Error("활동 데이터 저장 실패")
+        console.warn("활동 데이터 저장 실패:", data.message)
+
+        setActivityRecords((prevRecords) => [record, ...prevRecords])
+        setFilters(DEFAULT_FILTERS)
+        return
       }
 
-      setActivityRecords((prevRecords) => [record, ...prevRecords])
+      await fetchActivityRecords()
       setFilters(DEFAULT_FILTERS)
     } catch (error) {
       console.error("활동 데이터 저장 실패", error)
+      setActivityRecords((prevRecords) => [record, ...prevRecords])
+      setFilters(DEFAULT_FILTERS)
     }
   }
 
