@@ -23,9 +23,27 @@ export default function Home() {
   const [isMounted, setIsMounted] = useState(false)
   const [activeTab, setActiveTab] = useState<DashboardTab>("dashboard")
   const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS)
-  const [activityRecords, setActivityRecords] = useState<ActivityRecord[]>(
-    INITIAL_ACTIVITY_RECORDS
-  )
+  const [activityRecords, setActivityRecords] = useState<ActivityRecord[]>([])
+
+  const fetchActivityRecords = async () => {
+    try {
+      const response = await fetch("/api/activity-records")
+      const text = await response.text()
+
+      const data = text ? JSON.parse(text) : { records: [] }
+
+      if (!response.ok) {
+        console.error("활동 데이터 조회 실패:", data.message)
+        setActivityRecords([])
+        return
+      }
+
+      setActivityRecords(Array.isArray(data.records) ? data.records : [])
+    } catch (error) {
+      console.error("활동 데이터 조회 실패", error)
+      setActivityRecords([])
+    }
+  }
 
   useEffect(() => {
     const savedTab = window.localStorage.getItem("activeTab")
@@ -38,7 +56,12 @@ export default function Home() {
       setActiveTab(savedTab)
     }
 
-    setIsMounted(true)
+    const initializePage = async () => {
+      await fetchActivityRecords()
+      setIsMounted(true)
+    }
+
+    initializePage()
   }, [])
 
   const handleTabChange = (tab: DashboardTab) => {
@@ -107,9 +130,25 @@ export default function Home() {
     return calculateDataQuality(dashboardBaseRawRecords, dashboardBaseRecords)
   }, [dashboardBaseRawRecords, dashboardBaseRecords])
 
-  const handleAddActivityRecord = (record: ActivityRecord) => {
-    setActivityRecords((prevRecords) => [record, ...prevRecords])
-    setFilters(DEFAULT_FILTERS)
+  const handleAddActivityRecord = async (record: ActivityRecord) => {
+    try {
+      const response = await fetch("/api/activity-records", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(record),
+      })
+
+      if (!response.ok) {
+        throw new Error("활동 데이터 저장 실패")
+      }
+
+      setActivityRecords((prevRecords) => [record, ...prevRecords])
+      setFilters(DEFAULT_FILTERS)
+    } catch (error) {
+      console.error("활동 데이터 저장 실패", error)
+    }
   }
 
   if (!isMounted) {
@@ -141,6 +180,7 @@ export default function Home() {
           <ActivityDataOverview
             records={dashboardBaseRecords}
             onAddRecord={handleAddActivityRecord}
+            onRefreshRecords={fetchActivityRecords}
           />
         )}
 

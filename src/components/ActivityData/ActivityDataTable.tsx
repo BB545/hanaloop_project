@@ -2,7 +2,7 @@ import { ACTIVITY_TYPE_LABELS, ActivityType, CalculatedActivityRecord } from "@/
 import { Badge } from "../ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table"
-import { formatEmission, formatNumber } from "@/lib/format"
+import { formatEmission, formatEmissionFactor, formatNumber } from "@/lib/format"
 
 type ActivityDataTableProps = {
     records: CalculatedActivityRecord[]
@@ -102,7 +102,7 @@ const ActivityDataTable = ({
                                         <TableCell>{record.unit}</TableCell>
 
                                         <TableCell className="text-right">
-                                            {formatNumber(record.emissionFactor)}
+                                            {formatEmissionFactor(record.emissionFactor)}
                                         </TableCell>
 
                                         <TableCell className="text-right font-semibold">

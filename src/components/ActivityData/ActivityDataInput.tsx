@@ -1,4 +1,4 @@
-import { PlusCircle } from "lucide-react"
+import { PlusCircle, Upload } from "lucide-react"
 import { Button } from "../ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import { Input } from "../ui/input"
@@ -9,7 +9,8 @@ import { EMISSION_FACTORS } from "@/data/emissionFactors"
 import { useMemo, useState } from "react"
 
 type ActivityDataInputProps = {
-  onAddRecord: (record: ActivityRecord) => void
+  onAddRecord: (record: ActivityRecord) => Promise<void>
+  onImportSuccess: () => Promise<void>
 }
 
 type ActivityFormState = {
@@ -33,10 +34,11 @@ const ACTIVITY_TYPE_OPTIONS = Object.entries(ACTIVITY_TYPE_LABELS).map(
   })
 )
 
-const ActivityDataInput = ({ onAddRecord }: ActivityDataInputProps) => {
+const ActivityDataInput = ({ onAddRecord, onImportSuccess, }: ActivityDataInputProps) => {
   const [form, setForm] = useState<ActivityFormState>(INITIAL_FORM)
   const [message, setMessage] = useState("")
   const [isError, setIsError] = useState(false)
+  const [isUploading, setIsUploading] = useState(false)
 
   const descriptionOptions = useMemo(() => {
     if (!form.activityType) return []
@@ -74,7 +76,7 @@ const ActivityDataInput = ({ onAddRecord }: ActivityDataInputProps) => {
     setIsError(false)
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!form.date) {
       setValidationError("날짜를 입력해주세요.")
       return
@@ -123,21 +125,88 @@ const ActivityDataInput = ({ onAddRecord }: ActivityDataInputProps) => {
       unit: selectedUnit,
     }
 
-    onAddRecord(newRecord)
+    await onAddRecord(newRecord)
 
     setForm(INITIAL_FORM)
     setMessage("활동 데이터가 추가되었습니다. 필터가 초기화되어 전체 목록에서 새 데이터를 확인할 수 있습니다.")
     setIsError(false)
   }
 
+  const handleExcelImport = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0]
+
+    if (!file) return
+
+    const formData = new FormData()
+    formData.append("file", file)
+
+    try {
+      setIsUploading(true)
+      setMessage("")
+      setIsError(false)
+
+      const response = await fetch("/api/activity-records/import", {
+        method: "POST",
+        body: formData,
+      })
+
+      const text = await response.text()
+      const data = text ? JSON.parse(text) : {}
+
+      if (!response.ok) {
+        setMessage(data.message ?? "엑셀 업로드 중 오류가 발생했습니다.")
+        setIsError(true)
+        return
+      }
+
+      await onImportSuccess()
+
+      setMessage(`${data.count}건의 엑셀 데이터가 PostgreSQL에 저장되었습니다.`)
+      setIsError(false)
+    } catch (error) {
+      console.error("엑셀 업로드 실패", error)
+      setMessage("엑셀 업로드 중 오류가 발생했습니다.")
+      setIsError(true)
+    } finally {
+      setIsUploading(false)
+      event.target.value = ""
+    }
+  }
+
   return (
     <Card className="w-full overflow-visible">
       <CardHeader>
-        <div>
-          <CardTitle className="text-base">활동 데이터 입력</CardTitle>
-          <p className="mt-1 text-sm text-slate-500">
-            일자, 활동 유형, 항목, 사용량을 입력하면 배출량 계산에 사용할 수 있습니다.
-          </p>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <CardTitle className="text-base">활동 데이터 입력</CardTitle>
+            <p className="mt-1 text-sm text-slate-500">
+              일자, 활동 유형, 항목, 사용량을 입력하면 배출량 계산에 사용할 수 있습니다.
+            </p>
+          </div>
+
+          <div>
+            <Input
+              id="excel-import"
+              type="file"
+              accept=".xlsx,.xls"
+              className="hidden"
+              onChange={handleExcelImport}
+              disabled={isUploading}
+            />
+
+            <Button
+              type="button"
+              variant="outline"
+              className="h-9 cursor-pointer"
+              disabled={isUploading}
+              onClick={() => document.getElementById("excel-import")?.click()}
+            >
+              <Upload className="mr-2 h-4 w-4" />
+              {isUploading ? "업로드 중" : "엑셀 데이터 가져오기"}
+            </Button>
+          </div>
         </div>
       </CardHeader>
 

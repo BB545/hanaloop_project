@@ -4,13 +4,14 @@ import ActivityDataTable from "./ActivityDataTable"
 
 type ActivityDataOverviewProps = {
   records: CalculatedActivityRecord[]
-  onAddRecord: (record: ActivityRecord) => void
+  onAddRecord: (record: ActivityRecord) => Promise<void>
+  onRefreshRecords: () => Promise<void>
 }
 
-const ActivityDataOverview = ({ records, onAddRecord }: ActivityDataOverviewProps) => {
+const ActivityDataOverview = ({ records, onAddRecord, onRefreshRecords }: ActivityDataOverviewProps) => {
   return (
     <section className="space-y-6">
-      <ActivityDataInput onAddRecord={onAddRecord} />
+      <ActivityDataInput onAddRecord={onAddRecord} onImportSuccess={onRefreshRecords} />
       <ActivityDataTable records={records} />
     </section>
   )
