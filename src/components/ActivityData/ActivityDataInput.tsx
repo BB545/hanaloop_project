@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
-import { ACTIVITY_TYPE_UNITS, ActivityRecord, ActivityType } from "@/types/carbon"
+import { ACTIVITY_TYPE_LABELS, ACTIVITY_TYPE_UNITS, ActivityRecord, ActivityType } from "@/types/carbon"
 import { EMISSION_FACTORS } from "@/data/emissionFactors"
 import { useMemo, useState } from "react"
 
@@ -25,6 +25,13 @@ const INITIAL_FORM: ActivityFormState = {
   description: "",
   amount: "",
 }
+
+const ACTIVITY_TYPE_OPTIONS = Object.entries(ACTIVITY_TYPE_LABELS).map(
+  ([value, label]) => ({
+    value: value as ActivityType,
+    label,
+  })
+)
 
 const ActivityDataInput = ({ onAddRecord }: ActivityDataInputProps) => {
   const [form, setForm] = useState<ActivityFormState>(INITIAL_FORM)
@@ -170,9 +177,11 @@ const ActivityDataInput = ({ onAddRecord }: ActivityDataInputProps) => {
                 sideOffset={6}
                 className="z-50 min-w-[var(--radix-select-trigger-width)]"
               >
-                <SelectItem value="electricity">전기</SelectItem>
-                <SelectItem value="raw_material">원소재</SelectItem>
-                <SelectItem value="transportation">운송</SelectItem>
+                {ACTIVITY_TYPE_OPTIONS.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
