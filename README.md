@@ -100,7 +100,7 @@
 - 항목별 배출량 Top 5
 - 데이터 품질 요약
 
-![대시보드 초기 화면](./public/readme/upload1.gif)
+<img src="./public/readme/upload1.gif" alt="대시보드 초기 화면" width="800" />
 
 ---
 
@@ -117,7 +117,7 @@
 - 데이터 품질 요약
 - 활동 데이터 테이블
 
-![필터 적용 화면](./public/readme/filter.png)
+<img src="./public/readme/filter.png" alt="필터 적용 화면" width="800" />
 
 ---
 
@@ -137,7 +137,7 @@
 
 입력된 데이터는 PostgreSQL에 저장되며, 저장 후 화면 데이터가 갱신됩니다.
 
-![활동 데이터 입력 화면](./public/readme/data1.png)
+<img src="./public/readme/data1.png" alt="활동 데이터 입력 화면" width="800" />
 
 ---
 
@@ -157,7 +157,7 @@
 → 대시보드 및 테이블 갱신
 ```
 
-![엑셀 데이터 업로드 화면](./public/readme/upload2.gif)
+<img src="./public/readme/upload2.gif" alt="엑셀 데이터 업로드 화면" width="800" />
 
 ---
 
@@ -177,7 +177,7 @@
 | 배출계수 | 활동 항목에 적용된 계수 |
 | 배출량 | 사용량 × 배출계수 |
 
-![활동 데이터 테이블 화면](./public/readme/data2.png)
+<img src="./public/readme/data2.png" alt="활동 데이터 테이블 화면" width="800" />
 
 ---
 
@@ -231,55 +231,6 @@
 | DB Driver | pg |
 | Excel Parsing | xlsx |
 | Runtime Environment | Docker Compose |
-
----
-
-## 프로젝트 구조
-
-```text
-src/
-├─ app/
-│  ├─ api/
-│  │  └─ activity-records/
-│  │     ├─ route.ts
-│  │     └─ import/
-│  │        └─ route.ts
-│  └─ page.tsx
-│
-├─ components/
-│  ├─ ActivityData/
-│  │  ├─ ActivityDataOverview.tsx
-│  │  ├─ ActivityDataInput.tsx
-│  │  └─ ActivityDataTableLayout.tsx
-│  │
-│  ├─ dashboard/
-│  │  ├─ DashboardOverview.tsx
-│  │  ├─ DashboardKPI.tsx
-│  │  ├─ DashboardChartGrid.tsx
-│  │  └─ charts/
-│  │
-│  ├─ methodology/
-│  ├─ layout/
-│  └─ ui/
-│
-├─ data/
-│  └─ emissionFactors.ts
-│
-├─ lib/
-│  ├─ caculate.ts
-│  ├─ db.ts
-│  ├─ FilterRecords.ts
-│  └─ format.ts
-│
-└─ types/
-   └─ carbon.ts
-
-db/
-└─ init.sql
-
-docker-compose.yml
-.env.example
-```
 
 ---
 
