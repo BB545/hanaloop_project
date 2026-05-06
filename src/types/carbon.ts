@@ -34,7 +34,6 @@ export interface MonthlyEmission {
   emissions: number
 }
 
-// 도넛차트
 export interface EmissionByActivityType {
   activityType: ActivityType
   emissions: number

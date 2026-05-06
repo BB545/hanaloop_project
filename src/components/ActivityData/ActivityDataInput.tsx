@@ -116,7 +116,6 @@ const ActivityDataInput = ({ onAddRecord }: ActivityDataInputProps) => {
       unit: selectedUnit,
     }
 
-    console.log("newRecord", newRecord)
     onAddRecord(newRecord)
 
     setForm(INITIAL_FORM)

@@ -1,7 +1,6 @@
 "use client"
 
 import type { DashboardTab } from "@/constants/navigation"
-import { Leaf } from "lucide-react"
 import DashboardTabs from "./DashboardTabs"
 import Image from "next/image"
 
