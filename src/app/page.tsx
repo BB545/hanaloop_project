@@ -19,8 +19,6 @@ const DEFAULT_FILTERS: FilterState = {
   description: 'all',
 }
 
-const DEFAULT_TAB: DashboardTab = "dashboard"
-
 export default function Home() {
   const [isMounted, setIsMounted] = useState(false)
   const [activeTab, setActiveTab] = useState<DashboardTab>("dashboard")
