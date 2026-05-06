@@ -1,15 +1,17 @@
+import { ActivityRecord, CalculatedActivityRecord } from "@/types/carbon"
 import ActivityDataInput from "./ActivityDataInput"
 import ActivityDataTable from "./ActivityDataTable"
 
 type ActivityDataOverviewProps = {
-  filteredCount: number
+  records: CalculatedActivityRecord[]
+  onAddRecord: (record: ActivityRecord) => void
 }
 
-const ActivityDataOverview = ({ filteredCount }: ActivityDataOverviewProps) => {
+const ActivityDataOverview = ({ records, onAddRecord }: ActivityDataOverviewProps) => {
   return (
     <section className="space-y-6">
-      <ActivityDataInput />
-      <ActivityDataTable filteredCount={filteredCount} />
+      <ActivityDataInput onAddRecord={onAddRecord} />
+      <ActivityDataTable records={records} />
     </section>
   )
 }
