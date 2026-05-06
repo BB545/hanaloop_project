@@ -295,6 +295,23 @@ docker compose up -d
 
 ---
 
+### ERD
+
+| 테이블 | 설명 |
+|---|---|
+| `activity_records` | 엑셀 업로드 또는 직접 입력을 통해 저장되는 활동 데이터 |
+| `emission_factors` | 활동 데이터의 배출량 계산에 사용되는 배출계수 기준 데이터 |
+
+활동 데이터는 `activity_type`, `description`, `unit` 값을 기준으로 배출계수 테이블의 `activity_type`, `description`, `activity_unit`과 매칭됩니다.
+
+```text
+배출량(kgCO2e) = activity_records.amount × emission_factors.factor
+```
+
+<img src="./public/readme/erd.png" alt="erd" width="300" />
+
+---
+
 ## API 명세
 
 ### 활동 데이터 조회
