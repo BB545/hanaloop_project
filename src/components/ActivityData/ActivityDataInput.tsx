@@ -38,8 +38,8 @@ const ActivityDataInput = () => {
                 sideOffset={6}
                 className="z-50 min-w-[var(--radix-select-trigger-width)]"
               >
-                <SelectItem value="electricity">전기 사용</SelectItem>
-                <SelectItem value="raw_material">원자재</SelectItem>
+                <SelectItem value="electricity">전기</SelectItem>
+                <SelectItem value="raw_material">원소재</SelectItem>
                 <SelectItem value="transportation">운송</SelectItem>
               </SelectContent>
             </Select>

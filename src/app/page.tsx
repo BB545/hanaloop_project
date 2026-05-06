@@ -78,7 +78,7 @@ export default function Home() {
         )}
 
         {activeTab === "activity-data" && (
-          <ActivityDataOverview filteredCount={filteredRecords.length} />
+          <ActivityDataOverview records={calculatedRecords} />
         )}
 
         {activeTab === "methodology" && (

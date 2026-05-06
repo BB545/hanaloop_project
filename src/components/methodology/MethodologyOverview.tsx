@@ -33,9 +33,9 @@ const MethodologyOverview = () => {
               </div>
 
               <div className="rounded-xl border bg-white p-4">
-                <p className="text-sm font-medium text-slate-700">원자재</p>
+                <p className="text-sm font-medium text-slate-700">원소재</p>
                 <p className="mt-2 text-sm text-slate-500">
-                  kg 단위 원자재 사용량에 소재별 배출계수를 적용합니다.
+                  kg 단위 원소재 사용량에 소재별 배출계수를 적용합니다.
                 </p>
               </div>
 
@@ -76,7 +76,7 @@ const MethodologyOverview = () => {
             </div>
 
             <div className="flex items-center justify-between rounded-xl bg-lime-500/10 px-4 py-3">
-              <span className="text-sm font-medium text-slate-700">원자재</span>
+              <span className="text-sm font-medium text-slate-700">원소재</span>
               <Badge className="bg-lime-700/70 text-white hover:bg-lime-700/70">
                 kg
               </Badge>
@@ -136,7 +136,7 @@ const MethodologyOverview = () => {
 
                       {factor.activityType === "raw_material" && (
                         <Badge className="bg-lime-700/70 text-white hover:bg-lime-700/70">
-                          원자재
+                          원소재
                         </Badge>
                       )}
 
